@@ -1,0 +1,28 @@
+{
+  "name": "gateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gateway_index.js",
+  "scripts": {
+    "server": "concurrently -k npm:server:*",
+    "server:accounts": "wait-on tcp:4001 && nodemon ../accounts/src/accounts_index.js",
+    "server:posts_service": "wait-on tcp:4002 && nodemon ../posts_service/src/post_index.js",
+    "server:feed_service": "wait-on tcp:4003 && nodemon ../feed_service/src/feed_index.js",
+    "server:gateway": "nodemon ./gateway_index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/gateway": "^0.42.0",
+    "apollo-server": "^3.3.0",
+    "concurrently": "^6.3.0",
+    "dotenv-safe": "^8.2.0",
+    "firebase-admin": "^9.12.0",
+    "graphql": "^15.6.1",
+    "wait-on": "^6.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}

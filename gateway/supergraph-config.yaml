@@ -1,0 +1,13 @@
+subgraphs:
+  accounts:
+    routing_url: http://localhost:4001/graphql
+    schema:
+      subgraph_url: http://localhost:4001/graphql
+  posts_service:
+    routing_url: http://localhost:4002/graphql
+    schema:
+      subgraph_url: http://localhost:4002/graphql
+  feed_service:
+    routing_url: http://localhost:4003/graphql
+    schema:
+      subgraph_url: http://localhost:4003/graphql

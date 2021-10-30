@@ -1,0 +1,18 @@
+{
+  "name": "feed_service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "feed_index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/federation": "^0.33.1",
+    "apollo-server": "^3.3.0",
+    "graphql": "^15.6.1",
+    "mongodb": "^4.1.3"
+  }
+}

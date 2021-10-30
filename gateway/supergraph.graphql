@@ -1,0 +1,70 @@
+schema
+  @core(feature: "https://specs.apollo.dev/core/v0.2"),
+  @core(feature: "https://specs.apollo.dev/join/v0.1", for: EXECUTION)
+{
+  query: Query
+}
+
+directive @core(as: String, feature: String!, for: core__Purpose) repeatable on SCHEMA
+
+directive @join__field(graph: join__Graph, provides: join__FieldSet, requires: join__FieldSet) on FIELD_DEFINITION
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+directive @join__owner(graph: join__Graph!) on INTERFACE | OBJECT
+
+directive @join__type(graph: join__Graph!, key: join__FieldSet) repeatable on INTERFACE | OBJECT
+
+type Feed
+  @join__owner(graph: FEED_SERVICE)
+  @join__type(graph: FEED_SERVICE, key: "feed_id")
+{
+  contents: String @join__field(graph: FEED_SERVICE)
+  creation_date: String! @join__field(graph: FEED_SERVICE)
+  feed_id: ID! @join__field(graph: FEED_SERVICE)
+  photo: Photo @join__field(graph: FEED_SERVICE)
+  user_id: ID! @join__field(graph: FEED_SERVICE)
+}
+
+type Photo
+  @join__owner(graph: POSTS_SERVICE)
+  @join__type(graph: POSTS_SERVICE, key: "photo_id")
+  @join__type(graph: FEED_SERVICE, key: "photo_id")
+{
+  creation_date: String! @join__field(graph: POSTS_SERVICE)
+  photo_id: ID! @join__field(graph: POSTS_SERVICE)
+  photo_location: String! @join__field(graph: POSTS_SERVICE)
+  user_id: ID! @join__field(graph: POSTS_SERVICE)
+}
+
+type Query {
+  getuserData: User @join__field(graph: ACCOUNTS)
+  getuserFeed: Feed @join__field(graph: FEED_SERVICE)
+  getuserPhoto: Photo @join__field(graph: POSTS_SERVICE)
+}
+
+type User {
+  fullname: String
+  user_id: ID!
+  username: String!
+}
+
+enum core__Purpose {
+  """
+  `EXECUTION` features provide metadata necessary to for operation execution.
+  """
+  EXECUTION
+
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+}
+
+scalar join__FieldSet
+
+enum join__Graph {
+  ACCOUNTS @join__graph(name: "accounts" url: "http://localhost:4001/graphql")
+  FEED_SERVICE @join__graph(name: "feed_service" url: "http://localhost:4003/graphql")
+  POSTS_SERVICE @join__graph(name: "posts_service" url: "http://localhost:4002/graphql")
+}
