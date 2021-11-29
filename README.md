@@ -1,6 +1,6 @@
 # Apollo_fed_example
 
-This microservices based application is an example of apollo federation which uses multiple different types of databases(polyglot persistence).
+This microservices architecture is an application based on Apollo federation,GraphQL & node.js which uses multiple different types of databases(polyglot persistence).
 
 ## Getting Started
 Frontend - is a flutter application which uses firebase authentication for users.
